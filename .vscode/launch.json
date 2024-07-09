@@ -1,0 +1,119 @@
+{
+  // 使用 IntelliSense 以得知可用的屬性。
+  // 暫留以檢視現有屬性的描述。
+  // 如需詳細資訊，請瀏覽: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Udemy.No_08_NestedClass.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Udemy.No_04_Map.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Udemy.No_03_FileHandling.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Udemy.No_02_Exception.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Udemy.Udemy.No_02_Switch.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Current File",
+      "request": "launch",
+      "mainClass": "${file}"
+    },
+    {
+      "type": "java",
+      "name": "App",
+      "request": "launch",
+      "mainClass": "App",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Udemy.No_00_Ex_Leetcode.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main(1)",
+      "request": "launch",
+      "mainClass": "Udemy.No_00_Ex_LoopLab.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main(2)",
+      "request": "launch",
+      "mainClass": "Udemy.No_01_Class.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main(3)",
+      "request": "launch",
+      "mainClass": "YT.No_00_HelloWorld.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main(4)",
+      "request": "launch",
+      "mainClass": "YT.No_01_DataType.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main(5)",
+      "request": "launch",
+      "mainClass": "YT.No_02_DtypeConversion.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main(6)",
+      "request": "launch",
+      "mainClass": "YT.No_03_Operator.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main(7)",
+      "request": "launch",
+      "mainClass": "YT.No_04_CondiState.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main(8)",
+      "request": "launch",
+      "mainClass": "YT.No_05_Loop.Main",
+      "projectName": "JavaLearning_72338663"
+    }
+  ]
+}

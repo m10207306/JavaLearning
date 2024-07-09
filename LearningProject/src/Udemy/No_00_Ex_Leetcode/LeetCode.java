@@ -1,6 +1,7 @@
 package Udemy.No_00_Ex_Leetcode;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -84,14 +85,15 @@ public class LeetCode {
     }
 
     static public boolean findDuplicate(int[] arr) {
-        Map<Integer, Integer> map = new HashMap<>();
-
+        HashMap<Integer, Integer> map = new HashMap<>();
+        HashSet<Integer> set = new HashSet<>();
+        
         for (int i = 0; i < arr.length; ++i) {
-            if (map.containsKey(arr[i])) {
+            if (set.contains(arr[i])) {
                 return true;
             }
             else {
-                map.put(arr[i], i);
+                set.add(arr[i]);
             }
         }
 
@@ -204,7 +206,7 @@ public class LeetCode {
 
     static public void intersection (int[] arr1, int[] arr2) {
         Map<Integer, Integer> map = new HashMap<>();
-
+        
         for (int i : arr1) {
             if (map.containsKey(i)) {
                 map.put(i, map.get(1) + 1);
@@ -251,7 +253,7 @@ public class LeetCode {
     static public int fibonacci(int n) {
         if (n == 0 || n == 1) {
             return 1;
-        } 
+        }
         else {
             return fibonacci(n-1) + fibonacci(n-2);
         }
@@ -274,7 +276,6 @@ public class LeetCode {
             divisor = remains;
         }
         int gcf = divisor;
-
         System.out.println("最大公因數 " + gcf);
         
         // 公式： 最大公因數 * 最小公倍數 = i1 * i2

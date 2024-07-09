@@ -23,7 +23,7 @@ public class Main {
         // System.out.println(LeetCode.confirmEnding("Open sesame", "same"));
         // System.out.println(LeetCode.confirmEnding("Open sesame", "c"));
 
-        // System.out.println(LeetCode.findDuplicate(new int[] {1, 2, 3, 2, 1}));
+        System.out.println(LeetCode.findDuplicate(new int[] {1, 2, 3, 2, 1}));
         // System.out.println(LeetCode.findDuplicate(new int[] {1, 2, 3}));
 
         // LeetCode.pyramid(1);
@@ -56,6 +56,6 @@ public class Main {
 
         // LeetCode.pyramid2(3);
 
-        LeetCode.reversePyramid2(3);
+        // LeetCode.reversePyramid2(3);
     }
 }
