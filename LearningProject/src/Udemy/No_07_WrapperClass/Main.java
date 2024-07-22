@@ -17,8 +17,8 @@ public class Main {
          * 1. Collection 只能儲存 object, 因此 int 放不進去, 要用 Integer
          * 2. Multi-threading 只能跟 object 合作
          * 3. Serialization 只能用 object 合作
+         * 
          */
-
-         
+        
     }
 }

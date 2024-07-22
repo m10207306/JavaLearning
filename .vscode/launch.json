@@ -6,6 +6,48 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Main2",
+      "request": "launch",
+      "mainClass": "Udemy.No_13_Generic.Main2",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main1",
+      "request": "launch",
+      "mainClass": "Udemy.No_13_Generic.Main1",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Udemy.No_14_TypeErasure.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Udemy.No_13_Generic.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Udemy.No_12_StreamAPI.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Udemy.No_11_Lambda.Main",
+      "projectName": "JavaLearning_72338663"
+    },
+    {
+      "type": "java",
       "name": "Main",
       "request": "launch",
       "mainClass": "Udemy.No_08_NestedClass.Main",

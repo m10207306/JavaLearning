@@ -6,6 +6,7 @@ public class Outer {
         System.out.println("hello");
     }
 
+    // TODO: 建造者模式
     class Inner {
         void printI() {
             System.out.println(i);

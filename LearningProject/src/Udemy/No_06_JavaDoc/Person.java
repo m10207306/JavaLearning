@@ -3,6 +3,7 @@
  */
 package Udemy.No_06_JavaDoc;
 
+// TODO: 連結Class/Method的說明
 public class Person {
     private String name;
     private int nationality;

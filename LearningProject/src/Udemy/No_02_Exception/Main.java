@@ -82,7 +82,7 @@ public class Main {
         catch (AssertionError e) {
             System.out.println("catch AssertionError!");
         }
-        catch (IllegalArgumentException e) {
+        catch (RuntimeException e) {
             System.out.println("catch IllegalArgumentException!");
             e.printStackTrace();
         }
