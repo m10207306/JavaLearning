@@ -1,8 +1,12 @@
 package com.in28minutes.rest.webservices.restful_web_services.user;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,11 +36,32 @@ public class UserResource {
     @GetMapping("/users/{userId}")
     public User retrieveUser(@PathVariable int userId) {
         User user =  service.findOne(userId);
+
         if (user == null) {
             // 處理出錯後的處理以及顯示的 response 要看 CustomizeResponseEntityExceptionHandler
             throw new UserNotFoundException("id: " + userId);
         }
         return user;
+    }
+
+    @GetMapping("/users-hateous/{userId}")
+    public EntityModel<User> retrieveUserHateous(@PathVariable int userId) {
+        User user =  service.findOne(userId);
+
+        if (user == null) {
+            // 處理出錯後的處理以及顯示的 response 要看 CustomizeResponseEntityExceptionHandler
+            throw new UserNotFoundException("id: " + userId);
+        }
+        
+        /*
+         * HAL (JSON Hypertext Application Language)
+         * Simple format that gives a consistent and easy way to hyperlink between resources in your API
+        */
+        EntityModel<User> entityModel = EntityModel.of(user);
+        WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+        entityModel.add(link.withRel("all-users"));
+        
+        return entityModel;
     }
     
     @DeleteMapping("/users/{userId}")
