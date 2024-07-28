@@ -21,9 +21,9 @@ public class FilteringController {
     
     @GetMapping("/filtering-list-static")
     public List<SomeBean> filteringList() {
-    return Arrays.asList(
-        new SomeBean("value1", "value2", "value3"),
-        new SomeBean("value4", "value5", "value6")
+        return Arrays.asList(
+            new SomeBean("value1", "value2", "value3"),
+            new SomeBean("value4", "value5", "value6")
         );
     }
     
