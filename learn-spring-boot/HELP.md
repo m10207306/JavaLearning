@@ -60,9 +60,9 @@ If you manually switch to a different parent and actually want the inheritance, 
 
 5. Configuration Properties
 
-   1. application.properties 想指定某個 configuration 的 properties
-   2. 可以創建一個 class 設定成 @ConfigurationProperties
-   3. 接著 application.properties 就可以 assign 上面 class 的 properties
+   1. 可以創建一個 class 設定成 @ConfigurationProperties
+   2. 接著 application.properties 就可以 assign 上面 class 的 properties
+   3. 重點是讀取外部的 properties 放入 bean 當中
 
 6. Actuator
 
