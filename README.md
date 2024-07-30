@@ -39,5 +39,28 @@
       1. 把驗證錯誤的理由加入 response body
       2. 怎麼知道要 override handleMethodArgumentNotValid func?
    7. Swagger
-      1.
-   8. Internationalization
+      1. 導入 springdoc-openapi-starter-webmvc-ui 就可以自動產生 swagger 頁面
+   8. Content Negotiation
+      1. 同樣的 Resource 根據 consumer 的 accept header 提供 json/xml
+      2. 用 accept-language 提供 中文/英文/日文 (messages.properties 檔名是固定的)
+   9. Internationalization
+      1. messageSource.getMessage()
+   10. URI Versioning
+       1. URL Versioning
+          1. /v1/person, /v2/person
+       2. Request Parameter Versioning
+          1. /person?version=1, /person?version=2
+       3. Header Versioning
+          1. header: X-API-VERSION=1, X-API-VERSION=2
+       4. Media type versioning
+          1. header: accept=application/vnd.company.app-v1+json
+   11. HATEOAS
+   12. Filter response json
+   13. Actuator
+   14. HAL Explorer
+   15. JPA
+       1. JDBC -> Spring JDBC -> Hibernate -> JPA -> Spring Data JPA
+       2. Spring Data JPA 看起來很簡單，但是如果情境複雜該怎麼辦？
+       3. 看起來會自動創建 table，公司內實務上應該是要先由 DBA 創建 table 嗎？
+       4. 放在 resources 的 sql 都會被自動執行嗎？ (只認 data import schema 三個檔名, 有各自用途)
+   16. Authentication
