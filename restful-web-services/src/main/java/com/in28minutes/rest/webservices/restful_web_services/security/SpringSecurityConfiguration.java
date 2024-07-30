@@ -1,4 +1,4 @@
-package com.in28minutes.rest.webservices.restful_web_services.filtering.security;
+package com.in28minutes.rest.webservices.restful_web_services.security;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.context.annotation.Bean;

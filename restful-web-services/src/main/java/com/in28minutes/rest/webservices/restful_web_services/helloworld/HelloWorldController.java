@@ -25,15 +25,16 @@ public class HelloWorldController {
         return "Hello World";
     }
     
+    // DTO: Data Transfer Object
     @GetMapping(path = "/hello-world-bean")
     public HelloWorldBean helloWorldBean() {
         return new HelloWorldBean("Hello World");
     }
     
     @GetMapping(path = "/hello-world-bean/path-variable/{name}")
-    public HelloWorldBean helloWorldBeanPathVariable(@PathVariable String name) {
+    public HelloWorldBean helloWorldBeanPathVariable(@PathVariable("name") String name2) {
     return new HelloWorldBean(
-        String.format("Hello World, %s", name)
+        String.format("Hello World, %s", name2)
         );
     }
         

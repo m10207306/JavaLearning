@@ -36,9 +36,10 @@ If you manually switch to a different parent and actually want the inheritance, 
 1. Request Methods for Restful API
    1. GET: 取得既有 resource
    2. POST: 新增 resource
-   3. PUT: 更新既有 resource
-   4. UPDATE: 更新既有 resource 的部分資料
-   5. DELETE: 刪除 resource
+   3. PUT: 更新既有 resource (整份) 或是 創建
+   4. UPDATE: 更新既有 resource （整份）
+   5. PATCH: 部分更新 resource
+   6. DELETE: 刪除 resource
 2. Response Status
    1. 404: 找不到資源
    2. 500: 伺服器內部錯誤
@@ -48,3 +49,6 @@ If you manually switch to a different parent and actually want the inheritance, 
    6. 204: not content
    7. 401: Unauthorized
    8. 400: bad request
+3. 取得所有 User: /users
+   1. /users/{id}
+   2. /users/{id}/name
