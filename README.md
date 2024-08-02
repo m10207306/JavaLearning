@@ -64,3 +64,24 @@
        3. 看起來會自動創建 table，公司內實務上應該是要先由 DBA 創建 table 嗎？
        4. 放在 resources 的 sql 都會被自動執行嗎？ (只認 data import schema 三個檔名, 有各自用途)
    16. Authentication
+   17. JUnit
+   18. Mockito
+       1. Stub
+       2. Mock
+   19. Maven
+       1. pom: Project Object Model
+       2. Maven dependencies: Frameworks & libraries
+       3. Spring denpendencies: 特定 class
+       4. Parent Pom: spring-boot-starter-parent
+          1. 再更往上 Parent Pom: spring-boot-dependencies 可以看到所有 dependency 跟 version
+          2. 或是執行 mvn help:effective-pom 產生完整的 pom.xml (參考 effective.pom)
+       5. Maven build life cycle
+          1. Validate
+          2. Compile
+          3. Test
+          4. Package
+          5. Integration Test
+          6. Verify
+          7. Install
+          8. Deploy
+       6. 要執行指令: command + shift + P

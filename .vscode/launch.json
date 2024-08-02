@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "RestfulWebServicesApplication",
+      "request": "launch",
+      "mainClass": "com.in28minutes.rest.webservices.restful_web_services.RestfulWebServicesApplication",
+      "projectName": "restful-web-services"
+    },
+    {
+      "type": "java",
       "name": "Main2",
       "request": "launch",
       "mainClass": "Udemy.No_13_Generic.Main2",

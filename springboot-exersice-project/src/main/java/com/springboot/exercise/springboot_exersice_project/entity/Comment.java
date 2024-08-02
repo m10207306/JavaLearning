@@ -1,23 +1,31 @@
-package com.springboot.exercise.springboot_exersice_project.data;
+package com.springboot.exercise.springboot_exersice_project.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
-public class Post {
+public class Comment {
     @Id
     @GeneratedValue
     private Integer id;
 
+    @OneToOne
+    private Post post;
+
     private String title;
 
     private String body;
-
-    private Integer userId;
-
-    private Integer commentId;
-
+    
+    public Comment() {
+    }
+    public Comment(Integer id, Post post, String title, String body) {
+        this.id = id;
+        this.post = post;
+        this.title = title;
+        this.body = body;
+    }
     public Integer getId() {
         return id;
     }
@@ -36,21 +44,14 @@ public class Post {
     public void setBody(String body) {
         this.body = body;
     }
-    public Integer getUserId() {
-        return userId;
+    public Post getPost() {
+        return post;
     }
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-    public Integer getCommentId() {
-        return commentId;
-    }
-    public void setCommentId(Integer commentId) {
-        this.commentId = commentId;
+    public void setPost(Post post) {
+        this.post = post;
     }
     @Override
     public String toString() {
-        return "Post [id=" + id + ", title=" + title + ", body=" + body + ", userId=" + userId + ", commentId="
-                + commentId + "]";
+        return "Comment [id=" + id + ", post=" + post + ", title=" + title + ", body=" + body + "]";
     }
 }

@@ -16,6 +16,11 @@ public class CustomExceptionResponseBody extends ResponseEntityExceptionHandler 
     // 意料之外的錯誤, return 500
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> handleAllException(Exception ex, WebRequest request) throws Exception {
+        // StringBuilder stackTrace = new StringBuilder();
+        // for (StackTraceElement element : ex.getStackTrace()) {
+        //     stackTrace.append(element.toString()).append("\n");
+        // }
+        // System.out.println(stackTrace.toString());
         ExceptionDetails exceptionDetails = new ExceptionDetails(
             LocalDateTime.now(), 
             ex.getMessage(), 
@@ -27,6 +32,11 @@ public class CustomExceptionResponseBody extends ResponseEntityExceptionHandler 
     // 意料之中的錯誤回傳, 視狀況設定 status code
     @ExceptionHandler(ResponseStatusException.class)
     public final ResponseEntity<Object> handleResponseStatusException(ResponseStatusException ex, WebRequest request) throws Exception {
+        // StringBuilder stackTrace = new StringBuilder();
+        // for (StackTraceElement element : ex.getStackTrace()) {
+        //     stackTrace.append(element.toString()).append("/n");
+        // }
+        // System.out.println(stackTrace.toString());
         ExceptionDetails exceptionDetails = new ExceptionDetails(
             LocalDateTime.now(), 
             ex.getMessage(), 

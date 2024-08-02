@@ -43,7 +43,7 @@ public class UserJpaResource {
         Optional<UserJPA> user =  userRepository.findById(userId);
 
         if (user.isEmpty()) {
-            // 處理出錯後的處理以及顯示的 response 要看 CustomizeResponseEntityExceptionHandler
+            // 處理出錯後的處理以及c顯示的 response 要看 CustomizeResponseEntityExceptionHandler
             throw new UserNotFoundException("id: " + userId);
         }
 
