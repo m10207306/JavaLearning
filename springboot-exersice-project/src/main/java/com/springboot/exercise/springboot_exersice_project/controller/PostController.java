@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.exercise.springboot_exersice_project.dto.PostGetDto;
 import com.springboot.exercise.springboot_exersice_project.dto.PostPostDto;
-import com.springboot.exercise.springboot_exersice_project.entity.Post;
 import com.springboot.exercise.springboot_exersice_project.service.PostServiceImp;
 
 @RestController
