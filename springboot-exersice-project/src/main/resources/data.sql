@@ -4,5 +4,4 @@ INSERT INTO user_details (id, name, birth_date) VALUES (3, 'Chris', '2024-07-30'
 
 INSERT INTO POST (id, user_details_id, comment_id, title, body) VALUES (1, 1, NULL, 'user1 post1 title', 'user1 post1 body')
 
-
 -- SELECT 1

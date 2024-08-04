@@ -3,7 +3,11 @@ package com.springboot.exercise.springboot_exersice_project.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -20,7 +24,7 @@ public class UserDetails {
     @Past(message = "Birth day should be in the past")
     private LocalDate birthDate;
 
-    @OneToMany  // 這會多一個 table 去 mapping user 跟 post 兩個 table
+    @OneToMany(mappedBy = "id")
     private List<Post> posts;
 
     public UserDetails() {

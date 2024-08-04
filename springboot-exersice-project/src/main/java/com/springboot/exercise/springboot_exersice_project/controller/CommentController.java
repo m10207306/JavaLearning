@@ -3,6 +3,7 @@ package com.springboot.exercise.springboot_exersice_project.controller;
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,85 +14,33 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.springboot.exercise.springboot_exersice_project.dto.CommentGetDto;
+import com.springboot.exercise.springboot_exersice_project.dto.CommentPostDto;
 import com.springboot.exercise.springboot_exersice_project.entity.Comment;
 import com.springboot.exercise.springboot_exersice_project.entity.Post;
-import com.springboot.exercise.springboot_exersice_project.entity.UserDetails;
 import com.springboot.exercise.springboot_exersice_project.repository.CommentRepository;
 import com.springboot.exercise.springboot_exersice_project.repository.PostRepository;
 import com.springboot.exercise.springboot_exersice_project.repository.UserDetailsRepository;
+import com.springboot.exercise.springboot_exersice_project.service.CommentServiceImp;
 
 
 @RestController
 public class CommentController {
-    private UserDetailsRepository userDetailsRepository;
-    private PostRepository postRepository;
-    private CommentRepository commentRepository;
-
-    public CommentController(UserDetailsRepository userDetailsRepository, PostRepository postRepository,
-            CommentRepository commentRepository) {
-        this.userDetailsRepository = userDetailsRepository;
-        this.postRepository = postRepository;
-        this.commentRepository = commentRepository;
-    }
+    @Autowired
+    CommentServiceImp commentServiceImp;
 
     @GetMapping("/comments")
-    public List<Comment> getAllComment() {
-        return commentRepository.findAll();
+    public List<CommentGetDto> getAllComment() {
+        return commentServiceImp.getAllComment();
     }
 
     @GetMapping("/comments/{id}")
-    public Comment getComment(@PathVariable Integer id) {
-        return commentRepository.findById(id).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "commentId " + id + " not found")
-        );
+    public CommentGetDto getComment(@PathVariable Integer id) {
+        return commentServiceImp.getComment(id);
     }
 
     @PostMapping("/comments")
-    public ResponseEntity<Comment> createComment(@RequestBody CommentCreateRequestDTO body) {
-        Comment comment = new Comment();
-
-        Integer postId = body.getPostId();
-        Post post = postRepository.findById(postId).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "postId " + postId + " not found" )
-        );
-        post.setComment(comment);
-        comment.setPost(post);
-
-        comment.setTitle("re:" + post.getTitle());
-        comment.setBody(body.getBody());
-            
-        Comment newComment = commentRepository.save(comment);
-
-        URI location = ServletUriComponentsBuilder
-        .fromCurrentRequest()
-        .path("/post/{postId}/comment/{commentId}")
-        .buildAndExpand(postId, newComment.getId())
-        .toUri();
-
-        return ResponseEntity.created(location).body(newComment);
+    public ResponseEntity<CommentGetDto> createComment(@RequestBody CommentPostDto body) {
+        return commentServiceImp.createComment(body);
     }
 }
-
-class CommentCreateRequestDTO {
-    private Integer postId;
-    private String body;
-    
-    public Integer getPostId() {
-        return postId;
-    }
-    public void setPostId(Integer postId) {
-        this.postId = postId;
-    }
-    public String getBody() {
-        return body;
-    }
-    public void setBody(String body) {
-        this.body = body;
-    }
-    @Override
-    public String toString() {
-        return "CommentCreateRequestDTO [postId=" + postId + ", body=" + body + "]";
-    }
-}
-
-
