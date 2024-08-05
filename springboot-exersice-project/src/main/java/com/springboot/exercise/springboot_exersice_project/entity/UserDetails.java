@@ -1,8 +1,10 @@
 package com.springboot.exercise.springboot_exersice_project.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -20,8 +22,8 @@ public class UserDetails {
     @Past(message = "Birth day should be in the past")
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "id")
-    private List<Post> posts;
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 
     public UserDetails() {
     }

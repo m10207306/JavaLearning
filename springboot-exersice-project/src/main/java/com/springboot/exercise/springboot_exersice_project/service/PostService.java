@@ -2,15 +2,19 @@ package com.springboot.exercise.springboot_exersice_project.service;
 
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
-
-import com.springboot.exercise.springboot_exersice_project.dto.PostGetDto;
-import com.springboot.exercise.springboot_exersice_project.dto.PostPostDto;
+import com.springboot.exercise.springboot_exersice_project.dto.GetPostRs;
+import com.springboot.exercise.springboot_exersice_project.dto.CreatePostRq;
 
 
 public interface PostService {
-    public List<PostGetDto> getAllPost();
-    public PostGetDto getPost(Integer postId);
 
-    public ResponseEntity<PostGetDto> createPost(PostPostDto body);
+    public List<GetPostRs> getAllPost();
+    public GetPostRs getPost(Integer postId);
+
+    public GetPostRs createPost(CreatePostRq body);
+
+    public void deletePost(Integer id);
+
+    public GetPostRs updatePost(Integer id, CreatePostRq body);
+    
 }

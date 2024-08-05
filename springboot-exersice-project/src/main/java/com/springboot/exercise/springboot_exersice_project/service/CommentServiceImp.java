@@ -1,53 +1,48 @@
 package com.springboot.exercise.springboot_exersice_project.service;
 
-import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.springboot.exercise.springboot_exersice_project.dto.CommentGetDto;
-import com.springboot.exercise.springboot_exersice_project.dto.CommentPostDto;
+import com.springboot.exercise.springboot_exersice_project.dto.GetCommentRs;
+import com.springboot.exercise.springboot_exersice_project.dto.CreateCommentRq;
 import com.springboot.exercise.springboot_exersice_project.entity.Comment;
 import com.springboot.exercise.springboot_exersice_project.entity.Post;
 import com.springboot.exercise.springboot_exersice_project.repository.CommentRepository;
 import com.springboot.exercise.springboot_exersice_project.repository.PostRepository;
-import com.springboot.exercise.springboot_exersice_project.repository.UserDetailsRepository;
+
+import jakarta.transaction.Transactional;
 
 
 @Service
 public class CommentServiceImp implements CommentService {
-    @Autowired
-    private UserDetailsRepository userDetailsRepository;
     @Autowired
     private PostRepository postRepository;
     @Autowired
     private CommentRepository commentRepository;
 
     @Override
-    public List<CommentGetDto> getAllComment() {
+    public List<GetCommentRs> getAllComment() {
         List<Comment> comments = commentRepository.findAll();
         return comments.stream()
-                    .map(CommentServiceImp::settingDto)
-                    .collect(Collectors.toList());
+                    .map(comment -> this.settingDto(comment))
+                    .toList();
     }
     
     @Override
-    public CommentGetDto getComment(Integer id) {
+    public GetCommentRs getComment(Integer id) {
         Comment comment = commentRepository.findById(id).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "commentId " + id + " not found")
         );
 
-        return CommentServiceImp.settingDto(comment);
+        return this.settingDto(comment);
     }
 
     @Override
-    public ResponseEntity<CommentGetDto> createComment(CommentPostDto body) {
+    public GetCommentRs createComment(CreateCommentRq body) {
         Comment comment = new Comment();
 
         Integer postId = body.getPostId();
@@ -60,19 +55,41 @@ public class CommentServiceImp implements CommentService {
         comment.setTitle("re:" + post.getTitle());
         comment.setBody(body.getBody());
             
-        Comment newComment = commentRepository.save(comment);
+        commentRepository.save(comment);
 
-        URI location = ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/post/{postId}/comment/{commentId}")
-                        .buildAndExpand(postId, newComment.getId())
-                        .toUri();
-
-        return ResponseEntity.created(location).body(CommentServiceImp.settingDto(newComment));
+        return this.settingDto(comment);
     }
 
-    static private CommentGetDto settingDto(Comment comment) {
-        CommentGetDto commentGetDto = new CommentGetDto();
+    @Override
+    @Transactional
+    public void deleteComment(Integer id) {
+        if (commentRepository.existsById(id)) {
+            commentRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "commentId " + id + " not found");
+        }
+    }
+
+    @Override
+    public GetCommentRs updateComment(Integer id, CreateCommentRq body) {
+        Comment comment = commentRepository.findById(id).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "commentId " + id + " not found")
+        );
+
+        String newBody = body.getBody();
+        if (newBody == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "body can't be null");
+        }
+        else {
+            comment.setBody(newBody);
+            commentRepository.save(comment);
+        }
+
+        return this.settingDto(comment);
+    }
+
+    private GetCommentRs settingDto(Comment comment) {
+        GetCommentRs commentGetDto = new GetCommentRs();
         commentGetDto.setBody(comment.getBody());
         commentGetDto.setId(comment.getId());
         commentGetDto.setPostId(comment.getPost() != null ? comment.getPost().getId() : null);

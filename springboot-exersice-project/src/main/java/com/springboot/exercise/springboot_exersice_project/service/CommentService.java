@@ -2,14 +2,16 @@ package com.springboot.exercise.springboot_exersice_project.service;
 
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
-
-import com.springboot.exercise.springboot_exersice_project.dto.CommentGetDto;
-import com.springboot.exercise.springboot_exersice_project.dto.CommentPostDto;
+import com.springboot.exercise.springboot_exersice_project.dto.GetCommentRs;
+import com.springboot.exercise.springboot_exersice_project.dto.CreateCommentRq;
 
 public interface CommentService {
-    public List<CommentGetDto> getAllComment();
-    public CommentGetDto getComment(Integer id);
+    public List<GetCommentRs> getAllComment();
+    public GetCommentRs getComment(Integer id);
 
-    public ResponseEntity<CommentGetDto> createComment(CommentPostDto body);
+    public GetCommentRs createComment(CreateCommentRq body);
+
+    public void deleteComment(Integer id);
+
+    public GetCommentRs updateComment(Integer id, CreateCommentRq body);
 }

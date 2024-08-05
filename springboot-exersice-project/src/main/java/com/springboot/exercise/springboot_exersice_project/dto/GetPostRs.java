@@ -1,6 +1,6 @@
 package com.springboot.exercise.springboot_exersice_project.dto;
 
-public class PostGetDto {
+public class GetPostRs {
     private Integer id;
     private String title;
     private String body;
@@ -39,7 +39,7 @@ public class PostGetDto {
     }
     @Override
     public String toString() {
-        return "PostGetDto [id=" + id + ", title=" + title + ", body=" + body + ", userId=" + userId + ", commentId="
+        return "GetPostRs [id=" + id + ", title=" + title + ", body=" + body + ", userId=" + userId + ", commentId="
                 + commentId + "]";
     }
 }

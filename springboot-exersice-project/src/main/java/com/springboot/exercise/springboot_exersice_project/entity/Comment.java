@@ -1,9 +1,13 @@
 package com.springboot.exercise.springboot_exersice_project.entity;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PreRemove;
 
 @Entity
 public class Comment {
@@ -13,6 +17,14 @@ public class Comment {
 
     @OneToOne
     private Post post;
+
+    // 在刪除 Comment 之前, 把 post 那邊跟 comment 的關聯解除
+    @PreRemove
+    private void PreRemove() {
+        if (post != null) {
+            post.setComment(null);
+        }
+    }
 
     private String title;
 
@@ -36,6 +48,9 @@ public class Comment {
         return title;
     }
     public void setTitle(String title) {
+        if (title.contains("靠北")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Comment title contains illegal terms");
+        }
         this.title = title;
     }
     public String getBody() {

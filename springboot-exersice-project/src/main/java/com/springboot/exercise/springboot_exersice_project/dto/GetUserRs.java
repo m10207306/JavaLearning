@@ -3,7 +3,7 @@ package com.springboot.exercise.springboot_exersice_project.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-public class UserGetDto {
+public class GetUserRs {
     private Integer id;
     private String name;
     private LocalDate birthDate;
@@ -35,7 +35,7 @@ public class UserGetDto {
     }
     @Override
     public String toString() {
-        return "UserGetDTO [id=" + id + ", name=" + name + ", birthDate=" + birthDate + ", posts=" + posts + "]";
+        return "GetUserRs [id=" + id + ", name=" + name + ", birthDate=" + birthDate + ", posts=" + posts + "]";
     }
     
 }

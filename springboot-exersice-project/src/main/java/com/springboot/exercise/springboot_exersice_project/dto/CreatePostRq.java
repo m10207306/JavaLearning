@@ -1,6 +1,7 @@
 package com.springboot.exercise.springboot_exersice_project.dto;
 
-public class PostPostDto {
+
+public class CreatePostRq {
     private Integer userId;
     private String title;
     private String body;
@@ -25,6 +26,6 @@ public class PostPostDto {
     }
     @Override
     public String toString() {
-        return "PostPostDto [userId=" + userId + ", title=" + title + ", body=" + body + "]";
+        return "CreatePostRq [userId=" + userId + ", title=" + title + ", body=" + body + "]";
     }
 }

@@ -1,14 +1,28 @@
 package com.springboot.exercise.springboot_exersice_project.dto;
 
-public class CommentPostDto {
+public class GetCommentRs {
+    private Integer id;
     private Integer postId;
+    private String title;
     private String body;
     
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
     public Integer getPostId() {
         return postId;
     }
     public void setPostId(Integer postId) {
         this.postId = postId;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
     }
     public String getBody() {
         return body;
@@ -18,6 +32,6 @@ public class CommentPostDto {
     }
     @Override
     public String toString() {
-        return "CommentCreateRequestDTO [postId=" + postId + ", body=" + body + "]";
+        return "GetCommentRs [id=" + id + ", postId=" + postId + ", title=" + title + ", body=" + body + "]";
     }
 }

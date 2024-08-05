@@ -1,23 +1,23 @@
 package com.springboot.exercise.springboot_exersice_project.service;
 
-import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.springboot.exercise.springboot_exersice_project.dto.PostGetDto;
-import com.springboot.exercise.springboot_exersice_project.dto.PostPostDto;
+import com.springboot.exercise.springboot_exersice_project.dto.GetPostRs;
+import com.springboot.exercise.springboot_exersice_project.dto.CreatePostRq;
+import com.springboot.exercise.springboot_exersice_project.entity.Comment;
 import com.springboot.exercise.springboot_exersice_project.entity.Post;
 import com.springboot.exercise.springboot_exersice_project.entity.UserDetails;
 import com.springboot.exercise.springboot_exersice_project.repository.CommentRepository;
 import com.springboot.exercise.springboot_exersice_project.repository.PostRepository;
 import com.springboot.exercise.springboot_exersice_project.repository.UserDetailsRepository;
+
+import jakarta.transaction.Transactional;
 
 
 @Service
@@ -29,49 +29,89 @@ public class PostServiceImp implements PostService {
     @Autowired
     private CommentRepository commentRepository;
 
+
     @Override
-    public List<PostGetDto> getAllPost() {
+    public List<GetPostRs> getAllPost() {
         List<Post> posts = postRepository.findAll();
         return posts.stream()
-                    .map(PostServiceImp::settingDto)
-                    .collect(Collectors.toList());
+                    .map(post -> this.settingDto(post))
+                    .toList();
     }
 
     @Override
-    public PostGetDto getPost(Integer id) {
+    public GetPostRs getPost(Integer id) {
         Post post = postRepository.findById(id).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "postId " + id + " not found")
         );
 
-        return PostServiceImp.settingDto(post);
+        return this.settingDto(post);
     }
 
     @Override
-    public ResponseEntity<PostGetDto> createPost(PostPostDto body) {
+    public GetPostRs createPost(CreatePostRq body) {
         Post post = new Post();
         post.setTitle(body.getTitle());
         post.setBody(body.getBody());
 
         Integer userId = body.getUserId();
         UserDetails userDetails = userDetailsRepository.findById(userId).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "UserId " + userId + " not found" )
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "userId " + userId + " not found" )
         );
         post.setUserDetails(userDetails);
         post.setComment(null);
         
-        Post newPost = postRepository.save(post);
+        postRepository.save(post);
 
-        URI location = ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/user/{userId}/post/{postId}")
-                        .buildAndExpand(userId, newPost.getId())
-                        .toUri();
-
-        return ResponseEntity.created(location).body(PostServiceImp.settingDto(newPost)); 
+        return this.settingDto(post); 
     }
 
-    static private PostGetDto settingDto(Post post) {
-        PostGetDto postGetDto = new PostGetDto();
+    @Override
+    @Transactional
+    public void deletePost(Integer id) {
+        if (postRepository.existsById(id)) {
+            Post post = postRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "postId " + id + " not found" )
+            );
+            
+            // 刪除對於 userDetails 的關聯
+            if (post.getUserDetails() != null) {
+                UserDetails userDetails = post.getUserDetails();
+                userDetails.getPosts().remove(post);
+                userDetailsRepository.save(userDetails);
+            }
+
+            postRepository.delete(post);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "commentId " + id + " not found");
+        }
+    }
+
+    @Override
+    @Transactional
+    public GetPostRs updatePost(Integer id, CreatePostRq body) {
+        String newTitle = body.getTitle();
+        if (newTitle == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "post title can't be null");
+        }
+
+        Post post = postRepository.findById(id).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "postId " + id + " not found")
+        );
+
+        post.setTitle(newTitle);
+        postRepository.save(post);
+
+        Comment comment = post.getComment();
+        if (comment != null) {
+            comment.setTitle("re:" + newTitle);
+            commentRepository.save(comment);
+        }
+
+        return this.settingDto(post);
+    }
+
+    private GetPostRs settingDto(Post post) {
+        GetPostRs postGetDto = new GetPostRs();
         postGetDto.setBody(post.getBody());
         postGetDto.setCommentId(post.getComment() != null ? post.getComment().getId() : null);
         postGetDto.setId(post.getId());
