@@ -11,6 +11,7 @@ import com.springboot.exercise.springboot_exersice_project.dto.GetCommentRs;
 import com.springboot.exercise.springboot_exersice_project.dto.CreateCommentRq;
 import com.springboot.exercise.springboot_exersice_project.entity.Comment;
 import com.springboot.exercise.springboot_exersice_project.entity.Post;
+import com.springboot.exercise.springboot_exersice_project.exception.ResourceNotFoundException;
 import com.springboot.exercise.springboot_exersice_project.repository.CommentRepository;
 import com.springboot.exercise.springboot_exersice_project.repository.PostRepository;
 
@@ -35,7 +36,7 @@ public class CommentServiceImp implements CommentService {
     @Override
     public GetCommentRs getComment(Integer id) {
         Comment comment = commentRepository.findById(id).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "commentId " + id + " not found")
+            () -> new ResourceNotFoundException("commentId " + id + " not found")
         );
 
         return this.settingDto(comment);
@@ -47,7 +48,7 @@ public class CommentServiceImp implements CommentService {
 
         Integer postId = body.getPostId();
         Post post = postRepository.findById(postId).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "postId " + postId + " not found" )
+            () -> new ResourceNotFoundException("postId " + postId + " not found" )
         );
         post.setComment(comment);
         comment.setPost(post);
@@ -66,19 +67,19 @@ public class CommentServiceImp implements CommentService {
         if (commentRepository.existsById(id)) {
             commentRepository.deleteById(id);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "commentId " + id + " not found");
+            throw new ResourceNotFoundException("commentId " + id + " not found");
         }
     }
 
     @Override
     public GetCommentRs updateComment(Integer id, CreateCommentRq body) {
         Comment comment = commentRepository.findById(id).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "commentId " + id + " not found")
+            () -> new ResourceNotFoundException("commentId " + id + " not found")
         );
 
         String newBody = body.getBody();
         if (newBody == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "body can't be null");
+            throw new ResourceNotFoundException("body can't be null");
         }
         else {
             comment.setBody(newBody);

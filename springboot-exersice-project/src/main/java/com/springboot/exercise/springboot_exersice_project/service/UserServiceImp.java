@@ -1,7 +1,6 @@
 package com.springboot.exercise.springboot_exersice_project.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.springboot.exercise.springboot_exersice_project.dto.GetUserRs;
 import com.springboot.exercise.springboot_exersice_project.entity.UserDetails;
+import com.springboot.exercise.springboot_exersice_project.exception.ResourceNotFoundException;
 import com.springboot.exercise.springboot_exersice_project.repository.UserDetailsRepository;
 
 import jakarta.transaction.Transactional;
@@ -36,7 +36,7 @@ public class UserServiceImp implements UserService {
     public GetUserRs getUser(Integer id) {
         // 想說也不一定要自定義一個 Exception, 就用既有的 ResponseStatusException, 然後改 response body foramt 就好
         UserDetails user = userDetailsRepository.findById(id).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "userId " + id + " not found")
+            () -> new ResourceNotFoundException("userId " + id + " not found")
         );
 
         return this.settingDto(user);
@@ -54,16 +54,16 @@ public class UserServiceImp implements UserService {
         if (id != null) {
             Integer key = Integer.parseInt(id);
             user = userDetailsRepository.findById(key).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "userId " + key + " not found")
+                () -> new ResourceNotFoundException("userId " + key + " not found")
             );
         }
         else if (name != null) {
             user = userDetailsRepository.findByName(name).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "userName " + name + " not found")
+                () -> new ResourceNotFoundException("userName " + name + " not found")
             );
         }
         else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Search key undefined");
+            throw new ResourceNotFoundException("Search key undefined");
         }
         
         return this.settingDto(user);
@@ -76,7 +76,7 @@ public class UserServiceImp implements UserService {
         if (userDetailsRepository.existsById(id)) {
             userDetailsRepository.deleteById(id);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "userId " + id + " not found");
+            throw new ResourceNotFoundException("userId " + id + " not found");
         }
     }
 

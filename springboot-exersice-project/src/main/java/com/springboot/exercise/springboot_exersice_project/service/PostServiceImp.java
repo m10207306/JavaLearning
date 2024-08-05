@@ -1,7 +1,6 @@
 package com.springboot.exercise.springboot_exersice_project.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +12,8 @@ import com.springboot.exercise.springboot_exersice_project.dto.CreatePostRq;
 import com.springboot.exercise.springboot_exersice_project.entity.Comment;
 import com.springboot.exercise.springboot_exersice_project.entity.Post;
 import com.springboot.exercise.springboot_exersice_project.entity.UserDetails;
+import com.springboot.exercise.springboot_exersice_project.exception.RequestBadException;
+import com.springboot.exercise.springboot_exersice_project.exception.ResourceNotFoundException;
 import com.springboot.exercise.springboot_exersice_project.repository.CommentRepository;
 import com.springboot.exercise.springboot_exersice_project.repository.PostRepository;
 import com.springboot.exercise.springboot_exersice_project.repository.UserDetailsRepository;
@@ -41,7 +42,7 @@ public class PostServiceImp implements PostService {
     @Override
     public GetPostRs getPost(Integer id) {
         Post post = postRepository.findById(id).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "postId " + id + " not found")
+            () -> new ResourceNotFoundException("postId " + id + " not found")
         );
 
         return this.settingDto(post);
@@ -55,7 +56,7 @@ public class PostServiceImp implements PostService {
 
         Integer userId = body.getUserId();
         UserDetails userDetails = userDetailsRepository.findById(userId).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "userId " + userId + " not found" )
+            () -> new ResourceNotFoundException("userId " + userId + " not found" )
         );
         post.setUserDetails(userDetails);
         post.setComment(null);
@@ -70,19 +71,11 @@ public class PostServiceImp implements PostService {
     public void deletePost(Integer id) {
         if (postRepository.existsById(id)) {
             Post post = postRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "postId " + id + " not found" )
+                () -> new ResourceNotFoundException("postId " + id + " not found" )
             );
-            
-            // 刪除對於 userDetails 的關聯
-            if (post.getUserDetails() != null) {
-                UserDetails userDetails = post.getUserDetails();
-                userDetails.getPosts().remove(post);
-                userDetailsRepository.save(userDetails);
-            }
-
             postRepository.delete(post);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "commentId " + id + " not found");
+            throw new ResourceNotFoundException("commentId " + id + " not found");
         }
     }
 
@@ -91,11 +84,11 @@ public class PostServiceImp implements PostService {
     public GetPostRs updatePost(Integer id, CreatePostRq body) {
         String newTitle = body.getTitle();
         if (newTitle == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "post title can't be null");
+            throw new RequestBadException("post title can't be null");
         }
 
         Post post = postRepository.findById(id).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "postId " + id + " not found")
+            () -> new ResourceNotFoundException("postId " + id + " not found")
         );
 
         post.setTitle(newTitle);

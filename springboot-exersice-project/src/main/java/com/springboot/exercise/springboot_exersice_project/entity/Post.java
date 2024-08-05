@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PreRemove;
 
 @Entity
 // @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")   // 避免無限遞迴的問題
@@ -23,8 +24,14 @@ public class Post {
 
     @ManyToOne
     private UserDetails userDetails;
-    // TODO: 也可以用 PreRemove
-
+    
+    @PreRemove
+    private void PreRemove() {
+        if (userDetails != null) {
+            userDetails.getPosts().remove(this);
+        }
+    }
+    
     /*
      * 這裡的寫法(沒有mappedby, comment那邊也沒寫)似乎不太常見，
      * 因為這代表 post 有一個 comment_id, comment 有一個 post_id

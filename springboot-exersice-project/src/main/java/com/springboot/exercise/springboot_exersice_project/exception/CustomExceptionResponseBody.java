@@ -7,20 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
 public class CustomExceptionResponseBody extends ResponseEntityExceptionHandler {
 
-    // 意料之外的錯誤, return 500
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> handleAllException(Exception ex, WebRequest request) throws Exception {
-        // StringBuilder stackTrace = new StringBuilder();
-        // for (StackTraceElement element : ex.getStackTrace()) {
-        //     stackTrace.append(element.toString()).append("\n");
-        // }
-        // System.out.println(stackTrace.toString());
         ExceptionDetails exceptionDetails = new ExceptionDetails(
             LocalDateTime.now(), 
             ex.getMessage(), 
@@ -29,19 +22,23 @@ public class CustomExceptionResponseBody extends ResponseEntityExceptionHandler 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // 意料之中的錯誤回傳, 視狀況設定 status code
-    @ExceptionHandler(ResponseStatusException.class)
-    public final ResponseEntity<Object> handleResponseStatusException(ResponseStatusException ex, WebRequest request) throws Exception {
-        // StringBuilder stackTrace = new StringBuilder();
-        // for (StackTraceElement element : ex.getStackTrace()) {
-        //     stackTrace.append(element.toString()).append("/n");
-        // }
-        // System.out.println(stackTrace.toString());
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<Object> handleResourceNotFoundException(RuntimeException ex, WebRequest request) throws Exception {
         ExceptionDetails exceptionDetails = new ExceptionDetails(
             LocalDateTime.now(), 
             ex.getMessage(), 
             request.getDescription(false)
         );
-        return new ResponseEntity<>(exceptionDetails, ex.getStatusCode());
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RequestBadException.class)
+    public final ResponseEntity<Object> handleRequestBadException(RuntimeException ex, WebRequest request) throws Exception {
+        ExceptionDetails exceptionDetails = new ExceptionDetails(
+            LocalDateTime.now(), 
+            ex.getMessage(), 
+            request.getDescription(false)
+        );
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
     }
 }
