@@ -15,6 +15,6 @@ public interface PostService {
 
     public void deletePost(Integer id);
 
-    public GetPostRs updatePost(Integer id, CreatePostRq body);
+    public GetPostRs updatePostTitle(Integer id, CreatePostRq body);
     
 }

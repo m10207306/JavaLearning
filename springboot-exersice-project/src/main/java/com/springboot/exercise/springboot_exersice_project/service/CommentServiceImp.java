@@ -3,9 +3,7 @@ package com.springboot.exercise.springboot_exersice_project.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.springboot.exercise.springboot_exersice_project.dto.GetCommentRs;
 import com.springboot.exercise.springboot_exersice_project.dto.CreateCommentRq;
@@ -77,14 +75,8 @@ public class CommentServiceImp implements CommentService {
             () -> new ResourceNotFoundException("commentId " + id + " not found")
         );
 
-        String newBody = body.getBody();
-        if (newBody == null) {
-            throw new ResourceNotFoundException("body can't be null");
-        }
-        else {
-            comment.setBody(newBody);
-            commentRepository.save(comment);
-        }
+        comment.setBody(body.getBody());
+        commentRepository.save(comment);
 
         return this.settingDto(comment);
     }

@@ -1,9 +1,13 @@
 package com.springboot.exercise.springboot_exersice_project.dto;
 
+import jakarta.validation.constraints.NotNull;
 
 public class CreatePostRq {
     private Integer userId;
+
+    @NotNull
     private String title;
+
     private String body;
     
     public Integer getUserId() {

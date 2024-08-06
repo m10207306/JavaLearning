@@ -25,7 +25,7 @@ public class Comment {
             post.setComment(null);
         }
     }
-
+    
     private String title;
 
     private String body;

@@ -1,7 +1,12 @@
 package com.springboot.exercise.springboot_exersice_project.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class CreateCommentRq {
+    
     private Integer postId;
+
+    @NotNull
     private String body;
     
     public Integer getPostId() {

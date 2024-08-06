@@ -16,6 +16,8 @@ import com.springboot.exercise.springboot_exersice_project.dto.GetCommentRs;
 import com.springboot.exercise.springboot_exersice_project.dto.CreateCommentRq;
 import com.springboot.exercise.springboot_exersice_project.service.CommentService;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 public class CommentController {
@@ -33,7 +35,7 @@ public class CommentController {
     }
 
     @PostMapping("/comments")
-    public ResponseEntity<GetCommentRs> createComment(@RequestBody CreateCommentRq body) {
+    public ResponseEntity<GetCommentRs> createComment(@Valid @RequestBody CreateCommentRq body) {
         return ResponseEntity.created(null).body(commentService.createComment(body));
     }
 
@@ -44,7 +46,7 @@ public class CommentController {
     }
 
     @PutMapping("/comments/{id}")
-    public ResponseEntity<GetCommentRs> updateComment(@PathVariable Integer id, @RequestBody CreateCommentRq body) {
+    public ResponseEntity<GetCommentRs> updateComment(@PathVariable Integer id, @Valid @RequestBody CreateCommentRq body) {
         return ResponseEntity.ok().body(commentService.updateComment(id, body));
     }
 }

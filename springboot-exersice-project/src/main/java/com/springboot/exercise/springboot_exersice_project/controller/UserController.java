@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springboot.exercise.springboot_exersice_project.dto.ConfigBean;
 import com.springboot.exercise.springboot_exersice_project.dto.GetUserRs;
 import com.springboot.exercise.springboot_exersice_project.entity.UserDetails;
 import com.springboot.exercise.springboot_exersice_project.service.UserService;
@@ -23,6 +24,9 @@ import jakarta.validation.Valid;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ConfigBean configBean;
     
     @GetMapping("/users")
     public List<GetUserRs> getAllUsers() {
@@ -52,5 +56,10 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/config")
+    public ConfigBean getConfig() {
+        return configBean;
     }
 }

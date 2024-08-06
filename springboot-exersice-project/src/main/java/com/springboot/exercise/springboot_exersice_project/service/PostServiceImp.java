@@ -3,16 +3,13 @@ package com.springboot.exercise.springboot_exersice_project.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.springboot.exercise.springboot_exersice_project.dto.GetPostRs;
 import com.springboot.exercise.springboot_exersice_project.dto.CreatePostRq;
 import com.springboot.exercise.springboot_exersice_project.entity.Comment;
 import com.springboot.exercise.springboot_exersice_project.entity.Post;
 import com.springboot.exercise.springboot_exersice_project.entity.UserDetails;
-import com.springboot.exercise.springboot_exersice_project.exception.RequestBadException;
 import com.springboot.exercise.springboot_exersice_project.exception.ResourceNotFoundException;
 import com.springboot.exercise.springboot_exersice_project.repository.CommentRepository;
 import com.springboot.exercise.springboot_exersice_project.repository.PostRepository;
@@ -81,22 +78,17 @@ public class PostServiceImp implements PostService {
 
     @Override
     @Transactional
-    public GetPostRs updatePost(Integer id, CreatePostRq body) {
-        String newTitle = body.getTitle();
-        if (newTitle == null) {
-            throw new RequestBadException("post title can't be null");
-        }
-
+    public GetPostRs updatePostTitle(Integer id, CreatePostRq body) {
         Post post = postRepository.findById(id).orElseThrow(
             () -> new ResourceNotFoundException("postId " + id + " not found")
         );
 
-        post.setTitle(newTitle);
+        post.setTitle(body.getTitle());
         postRepository.save(post);
 
         Comment comment = post.getComment();
         if (comment != null) {
-            comment.setTitle("re:" + newTitle);
+            comment.setTitle("re:" + body.getTitle());
             commentRepository.save(comment);
         }
 
