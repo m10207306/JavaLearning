@@ -67,12 +67,10 @@ public class PostServiceImp implements PostService {
     @Transactional
     public void deletePost(Integer id) {
         if (postRepository.existsById(id)) {
-            Post post = postRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("postId " + id + " not found" )
-            );
+            Post post = postRepository.findById(id).get();
             postRepository.delete(post);
         } else {
-            throw new ResourceNotFoundException("commentId " + id + " not found");
+            throw new ResourceNotFoundException("postId " + id + " not found");
         }
     }
 
