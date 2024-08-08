@@ -30,6 +30,6 @@
         <appender-ref ref="FILE" />
     </root>
 
-    <logger name="com.springboot.exercise.springboot_exersice_project" level="DEBUG" />
+    <!-- <logger name="com.springboot.exercise.springboot_exersice_project" level="DEBUG" /> -->
     
 </configuration>

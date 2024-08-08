@@ -102,17 +102,18 @@ public class PostControllerTest {
     void testDeletePost_dataFound() throws Exception {
         UserDetails userDetails = new UserDetails(1, "Derick", LocalDate.now().minusDays(1), new ArrayList<>());
         userDetails = userDetailsRepository.save(userDetails);
-
+        
         Post post = new Post(1, "title", "body", userDetails, null);
         post = postRepository.save(post);
-
+        
         mockMvc.perform(delete("/posts/" + post.getId()))
-                .andExpect(status().isNoContent());
+        .andExpect(status().isNoContent());
         
         Optional<Post> parsedPost = postRepository.findById(post.getId());
         assertEquals(Optional.empty(), parsedPost);
         
         // 確認 userdetails 的 one-to-many 欄位中沒有 post
+        userDetails = userDetailsRepository.findById(userDetails.getId()).get();
         assertEquals(0, userDetails.getPosts().size());
     }
 

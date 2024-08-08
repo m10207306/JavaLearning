@@ -1,10 +1,17 @@
 package com.springboot.exercise.springboot_exersice_project.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class GetPostRs {
+    @Schema(description = "此貼文的 id", example = "1")
     private Integer id;
+    @Schema(description = "此貼文的 title", example = "Post title")
     private String title;
+    @Schema(description = "此貼文的 body", example = "Post body")
     private String body;
+    @Schema(description = "貼出此貼文的 user id", example = "1")
     private Integer userId;
+    @Schema(description = "此貼文下面的 comment id", example = "1")
     private Integer commentId;
 
     public Integer getId() {

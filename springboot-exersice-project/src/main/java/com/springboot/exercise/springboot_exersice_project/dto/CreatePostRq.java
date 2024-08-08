@@ -1,13 +1,18 @@
 package com.springboot.exercise.springboot_exersice_project.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
 public class CreatePostRq {
+    // TODO: 補@Schema
+    @Schema(description = "此貼文的 user id (創建貼文時required)", example = "1")
     private Integer userId;
-
+    
     @NotNull
+    @Schema(description = "此貼文的 title", example = "Post title", required = true)
     private String title;
 
+    @Schema(description = "此貼文的 body (創建貼文時required)", example = "Post body")
     private String body;
     
     public Integer getUserId() {
