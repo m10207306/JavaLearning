@@ -1,0 +1,48 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "ApiGatewayApplication",
+      "request": "launch",
+      "mainClass": "com.in28minutes.microservices.api_gateway.ApiGatewayApplication",
+      "projectName": "api-gateway"
+    },
+    {
+      "type": "java",
+      "name": "NamingServerApplication:8761",
+      "request": "launch",
+      "mainClass": "com.in28minutes.microservices.naming_server.NamingServerApplication",
+      "projectName": "naming-server"
+    },
+    {
+      "type": "java",
+      "name": "CurrencyExchangeServiceApplication:8000",
+      "request": "launch",
+      "mainClass": "com.in28minutes.microservices.currency_exchange_service.CurrencyExchangeServiceApplication",
+      "projectName": "currency-exchange-service"
+    },
+    {
+      "type": "java",
+      "name": "CurrencyExchangeServiceApplication:8001",
+      "request": "launch",
+      "mainClass": "com.in28minutes.microservices.currency_exchange_service.CurrencyExchangeServiceApplication",
+      "projectName": "currency-exchange-service",
+      "env": {
+        "SERVER_PORT": "8001"
+      }
+    },
+    {
+      "type": "java",
+      "name": "CurrencyConversion:8100",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.in28minutes.microservices.currency_conversion_service.CurrencyConversionServiceApplication",
+      "projectName": "currency-conversion-service",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env",
+      "env": {
+        "SERVER_PORT": "8100"
+      }
+    }
+  ]
+}

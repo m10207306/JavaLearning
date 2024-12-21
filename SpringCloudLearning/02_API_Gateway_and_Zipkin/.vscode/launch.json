@@ -1,0 +1,42 @@
+{
+    // 使用 IntelliSense 以得知可用的屬性。
+    // 暫留以檢視現有屬性的描述。
+    // 如需詳細資訊，請瀏覽: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "ApiGatewayApplication",
+            "request": "launch",
+            "mainClass": "com.in28minutes.microservices.api_gateway.ApiGatewayApplication",
+            "projectName": "api-gateway"
+        },
+        {
+            "type": "java",
+            "name": "CurrencyConversionServiceApplication",
+            "request": "launch",
+            "mainClass": "com.in28minutes.microservices.currency_conversion_service.CurrencyConversionServiceApplication",
+            "projectName": "currency-conversion-service"
+        },
+        {
+            "type": "java",
+            "name": "CurrencyExchangeServiceApplication",
+            "request": "launch",
+            "mainClass": "com.in28minutes.microservices.currency_exchange_service.CurrencyExchangeServiceApplication",
+            "projectName": "currency-exchange-service"
+        },
+        {
+            "type": "java",
+            "name": "NamingServerApplication",
+            "request": "launch",
+            "mainClass": "com.in28minutes.microservices.naming_server.NamingServerApplication",
+            "projectName": "naming-server"
+        }
+    ]
+}
